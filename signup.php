@@ -1,5 +1,5 @@
 <?php
-$con=mysqli_connect('localhost:3307','root','','travel');
+$con=mysqli_connect('localhost:3306','root','','travel');
 
 if (isset($_POST['signup'])) {
   $firstname=$_POST['fname'];

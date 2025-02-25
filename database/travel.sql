@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3307
--- Generation Time: Oct 14, 2021 at 03:21 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.1
+-- Host: 127.0.0.1
+-- Generation Time: Dec 30, 2024 at 10:04 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -35,7 +35,7 @@ CREATE TABLE `booking` (
   `city` varchar(20) NOT NULL,
   `fphone` int(15) NOT NULL,
   `fdesti` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `booking`
@@ -49,7 +49,11 @@ INSERT INTO `booking` (`id`, `ffirst`, `flast`, `femail`, `city`, `fphone`, `fde
 (9, 'Ganesh', 'Naik', 'ganeshravinaik2001@gmail.com', 'Honnavar', 2147483647, 'Kerala'),
 (10, 'Ganesh', 'Naik', 'ganeshravinaik2001@gmail.com', 'Honnavar', 2147483647, 'India Gate'),
 (11, 'Gajanan', 'Bhat', 'gajabhat@gmail.com', 'Kumta', 2147483647, 'Mysore'),
-(12, 'Ganesh', 'Naik', 'ganeshravinaik2001@gmail.com', 'Honnavar', 2147483647, 'Kerala');
+(12, 'Ganesh', 'Naik', 'ganeshravinaik2001@gmail.com', 'Honnavar', 2147483647, 'Kerala'),
+(13, 'priya', 'mr', 'priya@gmail.com', 'puttur', 1234567891, 'udupi'),
+(14, 'shivalika', 'p', 'shivalika@gmail.com', 'kundapur', 2147483647, 'falls'),
+(15, 'dharmi', 'bhut', 'dharmi@gmail.com', 'rajkot', 1234567891, 'udupi'),
+(16, 'disha', 'rai', 'disha@gmail.com', 'mangalore', 2147483647, 'goa');
 
 -- --------------------------------------------------------
 
@@ -64,7 +68,7 @@ CREATE TABLE `customer` (
   `email` varchar(30) NOT NULL,
   `city` varchar(10) NOT NULL,
   `phone` bigint(12) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `customer`
@@ -78,7 +82,8 @@ INSERT INTO `customer` (`id`, `fname`, `password`, `email`, `city`, `phone`) VAL
 (74, 'Kiran', 'AJkiran1', 'kiranaj56@gmail.com', 'Honnavar', 7586949199),
 (75, 'Prasad', 'Pra23444', 'prasad24@gmail.com', 'Honnavar', 7485961256),
 (76, 'Mahesh', 'Mahi1233', 'maheshmm@gmail.com', 'Kumta', 9978488656),
-(78, 'Nishchay', 'Nishi789', 'nishibhatt234@gmail.com', 'Udupi', 7485961236);
+(78, 'Nishchay', 'Nishi789', 'nishibhatt234@gmail.com', 'Udupi', 7485961236),
+(79, 'sandhya', 'Sandhya1', 'sandyaprabhu33@gmail.com', 'Puttur', 9980724497);
 
 -- --------------------------------------------------------
 
@@ -91,7 +96,7 @@ CREATE TABLE `feedback` (
   `name` varchar(20) NOT NULL,
   `email` varchar(30) NOT NULL,
   `feedbk` varchar(1000) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `feedback`
@@ -104,7 +109,43 @@ INSERT INTO `feedback` (`id`, `name`, `email`, `feedbk`) VALUES
 (4, 'adam', 'adamgray@gmail.com', 'your website looks good and nice user interface'),
 (5, 'arjun', 'arjun45@gmal.com', 'good website'),
 (6, 'Hitesh', 'hitesh43jk@gmai.com', 'its good website nice user interface'),
-(7, 'kiran', 'kiran35@gmail.com', 'this is a good website');
+(7, 'kiran', 'kiran35@gmail.com', 'this is a good website'),
+(8, 'chiru', 'chiru@gmail.com', 'good '),
+(9, 'shivalika', 'shiv@gmail.com', 'hello '),
+(10, 'dharmi', 'dharmi@gmail.com', 'hii chiru'),
+(11, 'sandhya', 'sandya@gmail.com', 'hellooo'),
+(12, 'John Doe', 'johndoe@example.com', 'Great service!');
+
+--
+-- Triggers `feedback`
+--
+DELIMITER $$
+CREATE TRIGGER `after_feedback_insert` AFTER INSERT ON `feedback` FOR EACH ROW BEGIN
+  INSERT INTO `feedback_log` (`feedback_id`, `action`) 
+  VALUES (NEW.id, 'Feedback Inserted');
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feedback_log`
+--
+
+CREATE TABLE `feedback_log` (
+  `log_id` int(10) NOT NULL,
+  `feedback_id` int(10) DEFAULT NULL,
+  `action` varchar(50) DEFAULT NULL,
+  `timestamp` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `feedback_log`
+--
+
+INSERT INTO `feedback_log` (`log_id`, `feedback_id`, `action`, `timestamp`) VALUES
+(1, 12, 'Feedback Inserted', '2024-12-30 07:48:09');
 
 -- --------------------------------------------------------
 
@@ -117,7 +158,7 @@ CREATE TABLE `hotels` (
   `hname` varchar(20) NOT NULL,
   `hphone` varchar(15) NOT NULL,
   `hcity` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `hotels`
@@ -141,26 +182,24 @@ CREATE TABLE `information` (
   `pi2` varchar(1000) NOT NULL,
   `pi3` varchar(1000) NOT NULL,
   `package` int(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `information`
 --
 
 INSERT INTO `information` (`pname`, `pdescription`, `pi_main`, `pi1`, `pi2`, `pi3`, `package`) VALUES
-('Goa', 'Calangute is the most popular holiday destination in Goa. Calangute Beach is colloquially know as the Queen of all the Beaches. Excellent accommodation facilites are available, particularly at the tourist resorts and cottages.\r\nThe Beaches of Goa are much ahead of other beaches in India in terms of popularity and the facilities that are available here. The beaches here have been accepted as a matter of life, there are exotic cuisine backing the pleasure of have on sun and sand, and water sports facilities that include from water scooters to water gliding. To add on you can shake your legs for some time with a glass of feni and beer, engaged in shopping on the beachside, or have midnight bonfire on the beach.', 'images//destination//goa1.jpg', 'images//destination//goa2.jpg', 'images//destination//goa3.jpg', 'images//destination//goa4.jpg', 15000),
-('Kerala', 'A state in Southern India is known as a tropical paradise of waving palms and wide sandy beaches. It is a narrow strip of coastal territory that slopes down the Western Ghats in a cascade of lush green vegetation, and reaches to the Arabian sea. Kerala borders the states of Tamil Nadu to the east and Karnataka to the north. It is also known for its backwaters, mountains, coconuts, spices and art forms like Kathakali and Mohini Attam. It is the most literate state in India, and a land of diverse religions, where you can find Hindu temples, mosques, churches, and even synagogues. With world class tourist sporting options, ayurvedic spas and treatments, eco-tourism initiatives, Kerala has much to offer the visitor.', 'images//destination//kerala1.jpg', 'images//destination//kerala2.jpg', 'images//destination//kerala3.jpg', 'images//destination//kerala4.jpg', 10000),
-('Mysore', 'Mysore Palace, also called Amba Vilas Palace, is one of the most magnificent and largest palaces in India. Situated in the southern state of Karnataka, it used to be the official residence of the Wodeyar Dynasty, the rulers of Mysore from 1399 to 1950. The grand palace stands tall in the heart of Mysore city and attracts visitors from across the world. Being one of the prime attractions in India after the Taj Mahal, it certainly deserves a place in every traveler’s bucket list. So why not visit Mysore Palace this holiday season?', 'images//destination//mysore1.jpg', 'images//destination//mysore2.jpg', 'images//destination//mysore3.jpg', 'images//destination//mysore4.jpg', 9000),
-('Ladakh', 'Leh & Ladakh, situated amidst the Great Himalayas and the Karakoram ranges in the scenic state of Jammu and Kashmir, are two of the most spectacular places in the world where scores of tourists from across the globe throng annually. Emblems of pure paradisiacal beauty, Leh & Ladakh are all about awe-inspiring landscapes, picturesque green oasis, scintillating monasteries and quaint hamlets. You are taken in by the breathtaking beauty the moment you land in this incredible mountain town. Get mesmerised by the amazingly pristine blue sky and transfer to a world of complete solitude admiring the mountain flowers, the snow covered peaks, the streams flowing by and the deep valleys', 'images//destination//ladakh1.jpg', 'images//destination//ladakh2.jpg', 'images//destination//ladakh3.jpg', 'images//destination//ladakh4.jpg', 20000),
-('Taj Mahal', 'The Taj Mahal is located on the right bank of the Yamuna River in a vast Mughal garden that encompasses nearly 17 hectares, in the Agra District in Uttar Pradesh. It was built by Mughal Emperor Shah Jahan in memory of his wife Mumtaz Mahal with construction starting in 1632 AD and completed in 1648 AD, with the mosque, the guest house and the main gateway on the south, the outer courtyard and its cloisters were added subsequently and completed in 1653 AD. The existence of several historical and Quaranic inscriptions in Arabic script have facilitated setting the chronology of Taj Mahal.', 'images//destination//tajmahal1.jpg', 'images//destination//tajmahal2.jpg', 'images//destination//tajmahal3.jpg', 'images//destination//tajmahal4.jpg', 19000),
-('India Gate', 'India Gate is one of many British monuments built by order of the Imperial War Graves Commission (later renamed Commonwealth War Graves Commission). The architect was Sir Edwin Lutyens, an Englishman who designed numerous other war memorials and was also the principal planner of New Delhi. The cornerstone was laid in 1921 by the duke of Connaught, third son of Queen Victoria. Construction of the All-India War Memorial, as it was originally known, continued until 1931, the year of the formal dedication of New Delhi as the capital of India.', 'images//destination//india_gate1.jpg', 'images//destination//india_gate2.jpg', 'images//destination//india_gate3.jpg', 'images//destination//india_gate4.jpg', 10000),
-('Hampi', 'Hampi is one of finest historical sites of ancient age in the world. It was the initial capital city of famous historical Vijayanagara Empire located on the bank of Tungabhadra River about 11 km away from Hospet City. Hampi is a small location covered an area of 25 sq. km. and it is totally bounded by mountains (Anjaneya, Malyavanta and Matanga Hills) by the three sites and rest one site is bordered by Tungabhadra River. It is believed by Hindus that Hampi was a kingdom of Monkeys (according to the Ramayana) before Vijayanagara Empire in pre-ancient age (around 1 CE) when the city was known as Kishkindha.', 'images//destination//hampi1.jpg', 'images//destination//hampi2.jpg', 'images//destination//hampi3.jpg', 'images//destination//hampi4.jpg', 5000),
-('Rajasthan', 'Rajasthan, state of northwestern India, located in the northwestern part of the Indian subcontinent. It is bounded to the north and northeast by the states of Punjab and Haryana, to the east and southeast by the states of Uttar Pradesh and Madhya Pradesh, to the southwest by the state of Gujarat, and to the west and northwest by the provinces of Sindh and Punjab in Pakistan. The capital city is Jaipur, in the east-central part of the state.', 'images//destination//rajasthan1.jpg', 'images//destination//rajasthan2.jpg', 'images//destination//rajasthan3.jpg', 'images//destination//rajasthan4.jpg', 16000),
-('Manali', 'Once called the \"end of the habitable world,\" Manali is an important hill station of northern India and is the destination of thousands of tourists every year. Its cool atmosphereprovides a perfect haven for the ones afflicted by the hot Indian summers. Besides offering quite a few places for sightseeing, Manali is also famous for adventure sports like skiing, hiking, mountaineering, paragliding, rafting, trekking, kayaking, and mountain biking. In brief, Manali-the veritable \"valley of the Gods\"-is an ideal place for the ones in search of both adventure and comfort.', 'images//destination//manali1.jpg', 'images//destination//manali2.jpg', 'images//destination//manali3.jpg', 'images//destination//manali4.jpg', 21000),
-('Srinagar', 'Srinagar, the summer capital is situated in the centre of Kashmir valley and is surrounded by five districts. In the north it is flanked by Kargil, in the South by Pulwama, in the north-west by Budgam. This extremely beautiful place tells the story of the love of the Mughal emperors. It possess deep green rice fields and river bridges, gardens in bloom, lakes rimmed by houseboats, a business center and holiday resort.', 'images//destination//srinagar1.jpg', 'images//destination//srinagar2.jpg', 'images//destination//srinagar3.jpg', 'images//destination//srinagar4.jpg', 21200),
-('Amritsar', 'Amritsar - Amritsar, literally Pool of Nectar, derives its name from Amrit Sarovar, the holy tank that surrounds the fabulous Golden Temple. First time visitors to Amritsar could be forgiven for the impression that Amritsar is like any other small town in northern India. In one sense, it is - with bustling markets, haphazard traffic, unyielding cattle, crowds and congestion typical of small town India. But Amritsar stands head and shoulders above any other city, its status elevated and sanctified by the presence of the venerable Golden Temple.', 'images//destination//amritsar1.jpg', 'images//destination//amritsar2.jpg', 'images//destination//amritsar3.jpg', 'images//destination//amritsar4.jpg', 19000),
-('Jog Falls', 'Jog Falls are located in the Shimoga district of Karnataka. Four cascades, known as Raja, Rani, Rover and Rocket merge to form the huge waterfall on the Sharavathi River. The falls are locally known as Geruoppe Falls, Gersoppa Falls and Jogada Gundi. Jog itself is a Kannada word, which means falls. Jog Falls are unique as the water does not stream down the rocks in a tiered fashion; it thunders down the slope losing contact with the rocks, making it the tallest un-tiered waterfall in India. The beauty of the waterfalls is enhanced by the lush green surroundings, which provide a scenic backdrop. Visitors can hike to the base of the falls and take a plunge in the water.', 'images//destination//jogfalls1.jpg', 'images//destination//jogfalls2.jpg', 'images//destination//jogfalls3.jpg', 'images//destination//jogfalls4.jpg', 5000),
-('Manglore', 'Manglore', 'images//destination//mysore1.jpg', 'images//destination//mysore2.jpg', 'images//destination//kerala3.jpg', 'images//destination//srinagar4.jpg', 0);
+('Udupi', 'Udupi is known for its temple and its unique cuisine. The Udupi Sri Krishna Temple is one of the most famous religious sites in the region, attracting devotees from across India. The city is also renowned for its beaches, with Malpe Beach being a popular tourist destination. Udupi is well-known for its traditional South Indian food, particularly the famous Udupi cuisine that is served worldwide.', 'images//destination//udupi.png', 'images//destination//udupi2.jpg', 'images//destination//udupi3.jpg', 'images//destination//udupi4.jpg', 5000),
+('KRS Dam', 'Krishna Raja Sagara (KRS) Dam, located near the city of Mysore, is a popular tourist spot offering a picturesque view of the dam and the surrounding landscape. The dam is situated on the Kaveri River and is surrounded by lush green fields, making it a perfect getaway spot for nature lovers and those seeking tranquility.', 'images//destination//krsdam.png', 'images//destination//krsdam2.jpg', 'images//destination//krsdam3.jpg', 'images//destination//krsdam4.jpg', 7000),
+('Mysore', 'Mysore Palace, a symbol of the grandeur and legacy of the Wodeyar dynasty, is a major attraction in the city. Mysore is famous for its rich cultural heritage, historical sites, and colorful festivals. The Mysore Zoo and Chamundeshwari Temple also contribute to the city\'s fame, making it a must-visit destination for history and culture enthusiasts.', 'images//destination//mysore1.jpg', 'images//destination//mysore2.jpg', 'images//destination//mysore3.jpg', 'images//destination//mysore4.jpg', 9000),
+('Mandalpatti', 'Mandalpatti is a scenic hilltop located near Madikeri in Coorg. The place is famous for its breathtaking views of the surrounding hills and valleys. It offers opportunities for trekking and adventure activities, making it a popular destination for nature lovers and adventure enthusiasts.', 'images//destination//mandalpatti.png', 'images//destination//mandalpatti2.jpg', 'images//destination//mandalpatti3.jpg', 'images//destination//mandalpatti4.jpg', 6000),
+('Badami', 'Badami, once the capital of the Chalukya dynasty, is known for its rock-cut temples and ancient ruins. The town is surrounded by beautiful hills and is famous for its historical significance and the Badami caves, which are carved into the hillsides. It’s an excellent destination for history buffs and adventure seekers alike.', 'images//destination//badami.png', 'images//destination//badami2.jpg', 'images//destination//badami3.jpg', 'images//destination//badami4.jpg', 8000),
+('Varanga', 'Varanga is a quaint village located in the Udupi district, known for its picturesque landscapes and tranquil atmosphere. The place is famous for its ancient temples, including the Varanga Jain Temple, and is a great spot for those looking to explore the spiritual and natural beauty of Karnataka.', 'images//destination//varanga.png', 'images//destination//varanga2.jpg', 'images//destination//varanga3.jpg', 'images//destination//varanga4.jpg', 4000),
+('Hampi', 'Hampi, a UNESCO World Heritage site, is famous for its ancient temples, ruins, and historical landmarks. The town was once the capital of the Vijayanagara Empire and is now a popular tourist destination due to its impressive historical and architectural significance.', 'images//destination//hampi1.jpg', 'images//destination//hampi2.jpg', 'images//destination//hampi3.jpg', 'images//destination//hampi4.jpg', 12000),
+('Gokarna', 'Gokarna is a small coastal town in Karnataka, known for its serene beaches and spiritual significance. The Om Beach and Kudle Beach attract beach lovers and those looking for a peaceful retreat. It’s also home to the famous Gokarna Temple, making it a perfect blend of nature and spirituality.', 'images//destination//gokarna.png', 'images//destination//gokarna2.jpg', 'images//destination//gokarna3.jpg', 'images//destination//gokarna4.jpg', 10000),
+('Chunchi Falls', 'Chunchi Falls is a scenic waterfall located in the Kanakapura district. The falls are surrounded by lush green forests and offer a peaceful escape from the hustle and bustle of city life. It is a popular destination for nature lovers and adventure enthusiasts who enjoy hiking and exploring the outdoors.', 'images//destination//chunchi_falls.png', 'images//destination//chunchi_falls2.jpg', 'images//destination//chunchi_falls3.jpg', 'images//destination//chunchi_falls4.jpg', 3000),
+('Vijayanagara', 'Vijayanagara is an ancient city and the capital of the Vijayanagara Empire. It is known for its historical ruins and temples that showcase the architectural brilliance of the empire. The city\'s most famous attractions include the Virupaksha Temple and the Hampi ruins.', 'images//destination//vijayanagara.png', 'images//destination//vijayanagara2.jpg', 'images//destination//vijayanagara3.jpg', 'images//destination//vijayanagara4.jpg', 15000),
+('Asthoor Tomb', 'Asthoor Tomb, located in the coastal town of Mangalore, is an important historical site. It is known for its unique architectural design and is a popular spot for those interested in history and heritage.', 'images//destination//asthoor.png', 'images//destination//asthoor2.jpg', 'images//destination//asthoor3.jpg', 'images//destination//asthoor4.jpg', 7000);
 
 -- --------------------------------------------------------
 
@@ -172,7 +211,7 @@ CREATE TABLE `login` (
   `user` varchar(10) NOT NULL,
   `pass` varchar(10) NOT NULL,
   `date_time` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `login`
@@ -196,7 +235,18 @@ INSERT INTO `login` (`user`, `pass`, `date_time`) VALUES
 ('Ganesh', 'Gane1234', '2021-01-30 06:24:15pm'),
 ('admin', 'ad123', '2021-06-08 04:11:53pm'),
 ('admin', 'ad123', '2021-09-19 03:24:26pm'),
-('admin', 'ad123', '2021-09-19 04:41:06pm');
+('admin', 'ad123', '2021-09-19 04:41:06pm'),
+('Ganesh', 'Gane1234', '2024-12-26 11:15:45am'),
+('Ganesh', 'Gane1234', '2024-12-26 11:19:50am'),
+('Ganesh', 'Gane1234', '2024-12-26 11:32:45am'),
+('Ganesh', 'Gane1234', '2024-12-26 04:20:25pm'),
+('Ganesh', 'Gane1234', '2024-12-27 06:01:02am'),
+('Ganesh', 'Gane1234', '2024-12-27 12:19:29pm'),
+('Ganesh', 'Gane1234', '2024-12-28 05:06:26pm'),
+('Ganesh', 'Gane1234', '2024-12-28 05:25:01pm'),
+('Aditya', 'Adi12389', '2024-12-28 05:36:36pm'),
+('Aditya', 'Adi12389', '2024-12-28 05:38:19pm'),
+('sandhya', 'Sandhya1', '2024-12-30 06:44:13am');
 
 -- --------------------------------------------------------
 
@@ -208,7 +258,7 @@ CREATE TABLE `places` (
   `pid` int(10) NOT NULL,
   `pname` varchar(20) NOT NULL,
   `pcity` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `places`
@@ -225,6 +275,18 @@ INSERT INTO `places` (`pid`, `pname`, `pcity`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `travel.login`
+--
+
+CREATE TABLE `travel.login` (
+  `user` varchar(10) NOT NULL,
+  `pass` varchar(10) NOT NULL,
+  `date_time` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `travel_agent`
 --
 
@@ -234,7 +296,7 @@ CREATE TABLE `travel_agent` (
   `aemail` varchar(30) NOT NULL,
   `aphone` int(15) NOT NULL,
   `acity` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `travel_agent`
@@ -269,6 +331,12 @@ ALTER TABLE `feedback`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `feedback_log`
+--
+ALTER TABLE `feedback_log`
+  ADD PRIMARY KEY (`log_id`);
+
+--
 -- Indexes for table `hotels`
 --
 ALTER TABLE `hotels`
@@ -294,19 +362,25 @@ ALTER TABLE `travel_agent`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `feedback_log`
+--
+ALTER TABLE `feedback_log`
+  MODIFY `log_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `hotels`

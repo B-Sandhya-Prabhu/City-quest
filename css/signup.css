@@ -4,7 +4,7 @@ body
 	margin:0;
 	padding:0;
 	font-family:sans-serif;
-	background:url(../tower.jpg) no-repeat;
+	background:url(../tower.png) no-repeat;
 	height: 100vh;
 	background-size: 100% 100%;	
 }

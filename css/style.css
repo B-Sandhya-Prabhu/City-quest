@@ -113,7 +113,7 @@ ul li{
   padding: 6px;
   font-size: 15px;
   border-radius: 15px;
-  border: 1px solid #0000ff;
+  border: 1px solid #0e0e0f;
   transition: 0.6s ease;
 }
 
@@ -128,7 +128,7 @@ ul li{
 }
 
 .title h1{
-  color: #fff;
+  color: black;
   font-size: 45px;
   font-style: Rage Italic;
 }
@@ -225,8 +225,8 @@ ul li{
   animation-duration: 1.5s;
 }
 .contain{
-  background: rgb(68,241,114);
-  background: linear-gradient(305deg, rgba(68,241,114,1) 30%, rgba(1,106,160,1) 82%); 
+  background: rgb(66, 163, 91);
+  background: linear-gradient(305deg, rgb(109, 124, 59) 30%, rgb(19, 21, 21) 82%); 
   width: 98.9vw;
   height: 56vh;
   margin: -138px 0px;
@@ -276,7 +276,7 @@ ul li{
 }
 .about{
   position: relative;
-  background-color: #8224e0;
+  background-color: #849d31;
   top: 118px;
   width: 98.9vw;
   height: 27vh;
